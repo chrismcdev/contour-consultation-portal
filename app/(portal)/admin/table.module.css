@@ -1,0 +1,52 @@
+.panel {
+  min-width: 0;
+}
+
+.search {
+  flex: 1 1 14rem;
+  max-width: 34rem;
+}
+
+.table {
+  table-layout: fixed;
+  overflow-wrap: anywhere;
+}
+
+.th {
+  padding: 0;
+}
+
+.th:nth-child(3) {
+  width: 30%;
+}
+
+.control {
+  width: 100%;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border-radius: var(--mantine-radius-sm);
+}
+
+.control:hover {
+  background-color: var(--portal-background);
+}
+
+.icon {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.reason {
+  white-space: pre-wrap;
+}
+
+.empty {
+  text-align: center;
+}
+
+@media (max-width: 50em) {
+  .empty {
+    text-align: left;
+  }
+}

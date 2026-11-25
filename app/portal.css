@@ -1,0 +1,70 @@
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--portal-background);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-group(*) {
+  animation-duration: 180ms;
+}
+
+::view-transition-group(.booking-list) {
+  animation: none;
+}
+
+::view-transition-old(.page),
+::view-transition-old(.booking-list) {
+  animation: fade-in 100ms ease-in reverse both;
+}
+
+::view-transition-new(.page),
+::view-transition-new(.booking-list) {
+  animation: fade-in 180ms ease-out both;
+}
+
+::view-transition-new(.booking-list) {
+  animation-name: list-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes list-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mantine-Skeleton-root::after {
+    animation: none;
+  }
+
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  ::view-transition-old(*) {
+    display: none;
+  }
+}

@@ -1,17 +1,11 @@
-"use client";
+import type { JSX } from "react";
+import { Button, type ButtonProps } from "@mantine/core";
+import { IconLogout2 } from "@tabler/icons-react";
 
-import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-
-export function LogoutButton() {
-  const router = useRouter();
-
-  const logout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push("/auth/login");
-  };
-
-  return <Button onClick={logout}>Logout</Button>;
-}
+export const LogoutButton = ({ variant }: Pick<ButtonProps, "variant">): JSX.Element => (
+  <form action="/api/auth/logout" method="post">
+    <Button type="submit" variant={variant} fullWidth leftSection={<IconLogout2 size={16} aria-hidden="true" />}>
+      Logout
+    </Button>
+  </form>
+);

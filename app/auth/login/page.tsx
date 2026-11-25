@@ -1,11 +1,37 @@
-import { LoginForm } from "@/components/login-form";
+"use client";
 
-export default function Page() {
+import { PasswordInput } from "@mantine/core";
+import type { JSX } from "react";
+import { FormProvider } from "react-hook-form";
+
+import { AccountForm, EmailField } from "@/components/account-form";
+import { useLogin } from "@/hooks/useLogin";
+
+const LoginPage = (): JSX.Element => {
+  const { form, onSubmit } = useLogin();
+  const {
+    register,
+    formState: { errors }
+  } = form;
+
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <LoginForm />
-      </div>
-    </div>
+    <FormProvider {...form}>
+      <AccountForm onSubmit={onSubmit} submitLabel="Sign in">
+        <EmailField />
+        <PasswordInput
+          {...register("password", { required: "Enter your password." })}
+          id="password"
+          label="Password"
+          size="md"
+          autoComplete="current-password"
+          error={errors.password?.message}
+          errorProps={{ role: "alert" }}
+          visibilityToggleButtonProps={{ "aria-label": "Toggle password visibility" }}
+          visibilityToggleFocusable
+        />
+      </AccountForm>
+    </FormProvider>
   );
-}
+};
+
+export default LoginPage;

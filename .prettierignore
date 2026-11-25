@@ -1,0 +1,8 @@
+.next/
+build/
+out/
+coverage/
+next-env.d.ts
+package-lock.json
+supabase/.branches/
+supabase/.temp/

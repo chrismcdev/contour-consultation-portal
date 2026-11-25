@@ -1,0 +1,41 @@
+.feedback {
+  margin-bottom: env(safe-area-inset-bottom);
+  margin-right: env(safe-area-inset-right);
+  width: min(
+    22rem,
+    calc(100% - 2 * var(--mantine-spacing-md) - env(safe-area-inset-left) - env(safe-area-inset-right))
+  );
+}
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--mantine-spacing-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.card {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  background-color: var(--mantine-color-body);
+}
+.section {
+  padding: var(--mantine-spacing-md);
+  font-size: var(--mantine-font-size-sm);
+}
+.section svg {
+  flex-shrink: 0;
+  color: var(--portal-detail-icon);
+}
+.reason {
+  white-space: pre-wrap;
+}
+.actions {
+  margin-top: auto;
+  padding-top: var(--mantine-spacing-md);
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--mantine-spacing-sm);
+}

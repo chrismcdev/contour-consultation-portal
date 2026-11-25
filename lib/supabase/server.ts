@@ -1,34 +1,21 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-/**
- * Especially important if using Fluid compute: Don't put this client in a
- * global variable. Always create a new client within each function when using
- * it.
- */
-export async function createClient() {
-  const cookieStore = await cookies();
+import type { Database, DatabaseClient } from "./database";
+import { SUPABASE_PUBLISHABLE_KEY, SUPABASE_URL } from "@/config/supabase";
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll();
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
-            );
-          } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have proxy refreshing
-            // user sessions.
-          }
-        },
-      },
-    },
-  );
-}
+export const createClient = async (responseHeaders?: Headers): Promise<DatabaseClient> => {
+  const store = await cookies();
+
+  return createServerClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+    cookies: {
+      getAll: () => store.getAll(),
+      setAll: (updates, cacheHeaders) => {
+        if (!responseHeaders) return;
+
+        Object.entries(cacheHeaders).forEach(([name, value]) => responseHeaders.set(name, value));
+        updates.forEach(({ name, value, options }) => store.set(name, value, options));
+      }
+    }
+  });
+};
